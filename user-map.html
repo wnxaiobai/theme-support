@@ -19,6 +19,34 @@
             background: #f5f5f5;
         }
 
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #333;
+        }
+
+        .lang-btn.active {
+            background: #666;
+        }
+
         .container {
             display: flex;
             max-width: 1400px;
@@ -145,552 +173,651 @@
             .content {
                 padding: 30px 20px;
             }
+
+            .lang-switcher {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin: 20px 0;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+    </div>
+
     <div class="container">
         <aside class="sidebar">
-            <h1>Meet Theme</h1>
+            <h1 data-key="title">Meet Theme</h1>
             <nav id="nav"></nav>
         </aside>
 
         <main class="content" id="content">
-            <section class="section" id="theme-settings">
-                <h2>1. Theme settings</h2>
+            <!-- Content will be dynamically generated -->
+        </main>
+    </div>
 
-                <h3>1.1 Logo Setting</h3>
-                <p>Upload logo and favicon, you can customize the logo size for desktop and mobile</p>
+    <script>
+        // Language data
+        const texts = {
+            en: {
+                title: "Meet Theme",
+                themeSettings: "1. Theme settings",
+                logoSetting: "1.1 Logo Setting",
+                logoDesc: "Upload logo and favicon, you can customize the logo size for desktop and mobile",
+                pageLayout: "1.2 Page Layout Setting",
+                widthSetting: "1.2.1 Width Setting",
+                widthDesc: "Configure the maximum width of the page, and the safe distance on the left and right sides of the page",
+                responsiveScaling: "1.2.2 Responsive Scaling Setting",
+                responsiveDesc: "Configure the scaling ratio of the page on the tablet and mobile (if you don't accurately configure the mobile size)",
+                colorScheme: "1.3 Color Scheme",
+                colorDesc: "The theme uses a color scheme system, supports creating multiple color schemes. Each scheme contains the following color definitions:",
+                basicColor: "1.3.1 Basic Color",
+                primaryButton: "1.3.2 Primary Button and Secondary Button",
+                inputBox: "1.3.3 Input Box",
+                productVariant: "1.3.4 Product Variant",
+                selectedState: "1.3.5 Selected State",
+                fontRelated: "1.4 Font Related",
+                fontSelection: "1.4.1 Font Selection",
+                fontDesc: "The theme supports 4 font categories:",
+                paragraphFont: "1.4.2 Paragraph Font Setting",
+                titleFont: "1.4.3 Title Font Setting (H1~H6)",
+                buttonStyle: "1.5 Button Style",
+                buttonPrimary: "1.5.1 Primary Button (Primary Button) and Secondary Button (Secondary Button)",
+                shoppingCart: "1.6 Shopping Cart Settings",
+                cartBasic: "1.6.1 Basic Settings",
+                cartType: "Shopping Cart Type",
+                drawerColor: "Drawer Color Scheme: Select color scheme (default: scheme-1) - only displayed when Drawer Shopping Cart is selected",
+                productTitleCase: "Product Title Case",
+                currencyCode: "1.6.2 Currency Code",
+                displayCurrency: "Display Currency Code in Shopping Cart Total: Open (default)/Close",
+                componentStyles: "1.7 Component Styles",
+                inputBoxStyle: "1.7.1 Input Box Style",
+                cardStyle: "1.7.2 Card Style",
+                iconSettings: "1.7.3 Icon Settings",
+                productSettings: "1.8 Product Settings",
+                productCard: "1.8.1 Product Card",
+                variantColorCard: "1.8.2 Variant Color Card",
+                priceDisplay: "1.8.3 Price Display",
+                badgeSettings: "1.9 Badge Settings",
+                searchFunction: "1.10 Search Function",
+                searchBasic: "1.10.1 Basic Settings",
+                searchLayout: "1.10.2 Layout Settings",
+                searchDisplay: "1.10.3 Display Options",
+                animationEffect: "1.11 Animation Effect",
+                headerSection: "2. Header Section",
+                announcementBar: "2.1 Announcement Bar",
+                announcementDesc: "Optional Configuration: Color Preset, Mobile/Desktop Element Height",
+                blockSettings: "2.1.1 Block Settings",
+                blockSettingsDesc: "Optional Marquee Effect and Carousel Effect (Note: You need to delete one block to change)",
+                headerSection2: "2.2 Header Section",
+                headerSection2Desc: "Optional Configuration: Color Preset, Title Font Style Preset, Menu Title Style Preset; menu selection, sticky navigation related configuration; mobile/desktop element height",
+                blockSettings2: "2.2.1 Block Settings",
+                megaMenu: "Mega Menu: Converts the Menu corresponding to the Link Title into a Mega Menu; Optional Configuration: 3图文modules",
+                footerSection: "3. Footer Section",
+                footerDesc: "Optional Configuration: Color Preset; menu selection; desktop row/column spacing, mobile row/column spacing",
+                blockSettings3: "3.1.1 Block Settings",
+                button: "Button",
+                text: "Text",
+                menu: "Menu (Footer menu)",
+                socialMedias: "Social Medias",
+                column: "Column (can configure containers arranged vertically)",
+                customSection: "4. Custom Section",
+                customDesc: "Default Configuration: page width, container height, color preset, background image configuration, desktop/mobile top and bottom spacing",
+                blockSettings4: "4.1 Block Settings",
+                marquee: "5. Marquee",
+                mediaGroup: "6. Media Group",
+                shopTheLook: "7. Shop the Look",
+                slideshow: "8. Slideshow",
+                beforeAfter: "9. Before After",
+                blogPosts: "10. Blog Posts",
+                collapsibleList: "11. Collapsible List",
+                collectionProducts: "12. Collection Products",
+                collectionsList: "13. Collections List",
+                mediaWidthText: "14. Media Width Text",
+                richText: "15. Rich Text",
+                video: "16. Video",
+                moreInfo: "More Information",
+                sameAsBefore: "Same as before"
+            },
+            zh: {
+                title: "Meet Theme",
+                themeSettings: "1. 主题设置",
+                logoSetting: "1.1 Logo设置",
+                logoDesc: "上传logo以及favicon的位置，可以自定义桌面端和移动端的logo尺寸",
+                pageLayout: "1.2 页面布局设置",
+                widthSetting: "1.2.1 宽度设置",
+                widthDesc: "配置页面的最大宽度，以及页面左右两侧安全距离",
+                responsiveScaling: "1.2.2 响应式缩放设置",
+                responsiveDesc: "配置页面在平板端和移动端的缩放比例（如果没有准确的配置移动端尺寸的话）",
+                colorScheme: "1.3 颜色方案",
+                colorDesc: "主题使用颜色方案组系统,支持创建多个配色方案。每个方案包含以下颜色定义:",
+                basicColor: "1.3.1 基础颜色",
+                primaryButton: "1.3.2 主要按钮以及次要按钮",
+                inputBox: "1.3.3 输入框",
+                productVariant: "1.3.4 商品变体",
+                selectedState: "1.3.5 选中状态",
+                fontRelated: "1.4 字体相关",
+                fontSelection: "1.4.1 字体选择",
+                fontDesc: "主题支持4种字体类别:",
+                paragraphFont: "1.4.2 段落字体设置",
+                titleFont: "1.4.3 标题字体设置（H1~H6）",
+                buttonStyle: "1.5 按钮样式",
+                buttonPrimary: "1.5.1 主要按钮 (Primary Button) 、次要按钮 (Secondary Button)",
+                shoppingCart: "1.6 购物车设置",
+                cartBasic: "1.6.1 基本设置",
+                cartType: "购物车类型",
+                drawerColor: "抽屉配色方案: 选择颜色方案 (默认scheme-1)",
+                productTitleCase: "商品标题大小写",
+                currencyCode: "1.6.2 货币代码",
+                displayCurrency: "购物车总计显示货币代码: 开启(默认)/关闭",
+                componentStyles: "1.7 组件样式",
+                inputBoxStyle: "1.7.1 输入框样式",
+                cardStyle: "1.7.2 卡片样式",
+                iconSettings: "1.7.3 图标设置",
+                productSettings: "1.8 产品设置",
+                productCard: "1.8.1 产品卡片",
+                variantColorCard: "1.8.2 变体色卡",
+                priceDisplay: "1.8.3 价格显示",
+                badgeSettings: "1.9 徽章设置",
+                searchFunction: "1.10 搜索功能",
+                searchBasic: "1.10.1 基本设置",
+                searchLayout: "1.10.2 布局设置",
+                searchDisplay: "1.10.3 显示选项",
+                animationEffect: "1.11 动画效果",
+                headerSection: "2. Header部分",
+                announcementBar: "2.1 Announcement Bar",
+                announcementDesc: "可选配置：颜色预设，移动端/桌面端元素高度",
+                blockSettings: "2.1.1 Block Settings",
+                blockSettingsDesc: "可选 Marquee效果和Carousel效果（注意，需要删除其中一个block才能更换）",
+                headerSection2: "2.2 Header Section",
+                headerSection2Desc: "可选配置：颜色预设，标题字体样式预设，菜单标题样式预设；menu选择，粘性导航相关配置；移动端/桌面端元素高度",
+                blockSettings2: "2.2.1 Block Settings",
+                megaMenu: "Mega Menu：会将Link Title对应的Menu转换成Mega Menu；可选配置3个图文模块",
+                footerSection: "3. Footer部分",
+                footerDesc: "可选配置：颜色预设；menu选择；桌面端行、列间距，移动端行、列间距",
+                blockSettings3: "3.1.1 Block Settings",
+                button: "Button",
+                text: "Text",
+                menu: "Menu（Footer页脚的menu）",
+                socialMedias: "Social Medias",
+                column: "Column（可以配置纵向排列资源的容器）",
+                customSection: "4. Custom Section",
+                customDesc: "默认配置项：页面宽度，容器高度，颜色预设，背景图片配置，桌面端/移动端上下间距",
+                blockSettings4: "4.1 Block Settings",
+                marquee: "5. Marquee",
+                mediaGroup: "6. Media Group",
+                shopTheLook: "7. Shop the Look",
+                slideshow: "8. Slideshow",
+                beforeAfter: "9. Before After",
+                blogPosts: "10. Blog Posts",
+                collapsibleList: "11. Collapsible List",
+                collectionProducts: "12. Collection Products",
+                collectionsList: "13. Collections List",
+                mediaWidthText: "14. Media Width Text",
+                richText: "15. Rich Text",
+                video: "16. Video",
+                moreInfo: "More Information",
+                sameAsBefore: "Same as before"
+            }
+        };
 
-                <h3>1.2 Page Layout Setting</h3>
+        let currentLang = 'en';
 
-                <h4>1.2.1 Width Setting</h4>
-                <p>Configure the maximum width of the page, and the safe distance on the left and right sides of the
-                    page</p>
+        // Initialize
+        function init() {
+            generateContent();
+            setupNavigation();
+            setupLanguageSwitcher();
+        }
 
-                <h4>1.2.2 Responsive Scaling Setting</h4>
-                <p>Configure the scaling ratio of the page on the tablet and mobile (if you don't accurately configure
-                    the mobile size)</p>
+        function generateContent() {
+            const content = document.getElementById('content');
+            const lang = currentLang;
+            const t = texts[lang];
 
-                <h3>1.3 Color Scheme</h3>
-                <p>The theme uses a color scheme system, supports creating multiple color schemes. Each scheme contains
-                    the following color definitions:</p>
-
-                <h4>1.3.1 Basic Color</h4>
-                <ul>
-                    <li>Background Color</li>
-                    <li>Title Color</li>
-                    <li>Text Color</li>
-                    <li>Primary Color</li>
-                    <li>Primary Color Hover</li>
-                    <li>Border Color</li>
-                    <li>Shadow Color</li>
+            content.innerHTML = `
+                <section class="section" id="theme-settings">
+                    <h2>${t.themeSettings}</h2>
+                    <h3>${t.logoSetting}</h3>
+                    <p>${t.logoDesc}</p>
+                    <h3>${t.pageLayout}</h3>
+                    <h4>${t.widthSetting}</h4>
+                    <p>${t.widthDesc}</p>
+                    <h4>${t.responsiveScaling}</h4>
+                    <p>${t.responsiveDesc}</p>
+                    <h3>${t.colorScheme}</h3>
+                    <p>${t.colorDesc}</p>
+                    <h4>${t.basicColor}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Background Color' : '背景色'}</li>
+                        <li>${lang === 'en' ? 'Title Color' : '标题颜色'}</li>
+                        <li>${lang === 'en' ? 'Text Color' : '文本颜色'}</li>
+                        <li>${lang === 'en' ? 'Primary Color' : '主色调'}</li>
+                        <li>${lang === 'en' ? 'Primary Color Hover' : '主色调悬停'}</li>
+                        <li>${lang === 'en' ? 'Border Color' : '边框颜色'}</li>
+                        <li>${lang === 'en' ? 'Shadow Color' : '阴影颜色'}</li>
                 </ul>
-
-                <h4>1.3.2 Primary Button and Secondary Button</h4>
-                <ul>
-                    <li>Background Color Text Color</li>
-                    <li>Border Color</li>
-                    <li>Hover Background Color</li>
-                    <li>Hover Text Color</li>
-                    <li>Hover Border Color</li>
+                    <h4>${t.primaryButton}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Background Color Text Color' : '背景色文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Border Color' : '边框颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Background Color' : '悬停背景色'}</li>
+                        <li>${lang === 'en' ? 'Hover Text Color' : '悬停文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Border Color' : '悬停边框颜色'}</li>
                 </ul>
-
-                <h4>1.3.3 Input Box</h4>
-                <ul>
-                    <li>Background Color</li>
-                    <li>Text Color</li>
-                    <li>Border Color</li>
-                    <li>Hover Background Color</li>
+                    <h4>${t.inputBox}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Background Color' : '背景色'}</li>
+                        <li>${lang === 'en' ? 'Text Color' : '文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Border Color' : '边框颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Background Color' : '悬停背景色'}</li>
                 </ul>
-
-                <h4>1.3.4 Product Variant</h4>
-                <ul>
-                    <li>Background Color</li>
-                    <li>Text Color</li>
-                    <li>Border Color</li>
-                    <li>Hover Background Color</li>
-                    <li>Hover Text Color</li>
-                    <li>Hover Border Color</li>
+                    <h4>${t.productVariant}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Background Color' : '背景色'}</li>
+                        <li>${lang === 'en' ? 'Text Color' : '文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Border Color' : '边框颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Background Color' : '悬停背景色'}</li>
+                        <li>${lang === 'en' ? 'Hover Text Color' : '悬停文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Border Color' : '悬停边框颜色'}</li>
                 </ul>
-
-                <h4>1.3.5 Selected State</h4>
-                <ul>
-                    <li>Background Color</li>
-                    <li>Text Color</li>
-                    <li>Border Color</li>
-                    <li>Hover Background Color</li>
-                    <li>Hover Text Color</li>
-                    <li>Hover Border Color</li>
+                    <h4>${t.selectedState}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Background Color' : '背景色'}</li>
+                        <li>${lang === 'en' ? 'Text Color' : '文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Border Color' : '边框颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Background Color' : '悬停背景色'}</li>
+                        <li>${lang === 'en' ? 'Hover Text Color' : '悬停文字颜色'}</li>
+                        <li>${lang === 'en' ? 'Hover Border Color' : '悬停边框颜色'}</li>
                 </ul>
-
-                <h3>1.4 Font Related</h3>
-
-                <h4>1.4.1 Font Selection</h4>
-                <p>The theme supports 4 font categories:</p>
-                <ul>
-                    <li>Body Font</li>
-                    <li>Subheading Font</li>
-                    <li>Heading Font</li>
-                    <li>Feature Font</li>
+                    <h3>${t.fontRelated}</h3>
+                    <h4>${t.fontSelection}</h4>
+                    <p>${t.fontDesc}</p>
+                    <ul>
+                        <li>${lang === 'en' ? 'Body Font' : '正文字体'}</li>
+                        <li>${lang === 'en' ? 'Subheading Font' : '副标题字体'}</li>
+                        <li>${lang === 'en' ? 'Heading Font' : '标题字体'}</li>
+                        <li>${lang === 'en' ? 'Feature Font' : '特色字体'}</li>
                 </ul>
-
-                <h4>1.4.2 Paragraph Font Setting</h4>
-                <ul>
-                    <li>Font Size</li>
-                    <li>Line Height Option</li>
-                    <li>Font Weight</li>
+                    <h4>${t.paragraphFont}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Font Size' : '字体大小'}</li>
+                        <li>${lang === 'en' ? 'Line Height Option' : '行高选项'}</li>
+                        <li>${lang === 'en' ? 'Font Weight' : '字重'}</li>
                 </ul>
-
-                <h4>1.4.3 Title Font Setting (H1~H6)</h4>
-                <ul>
-                    <li>Font: heading/body/subheading/feature (default: heading)</li>
-                    <li>Size: 24-96px (default: 48px)</li>
-                    <li>Font Weight: 200-900 (default: 400)</li>
-                    <li>Line Height: display-tight/normal/loose (default: tight)</li>
-                    <li>Letter Spacing: heading-tight/normal/loose (default: normal)</li>
-                    <li>Text Transform: none/uppercase (default: none)</li>
+                    <h4>${t.titleFont}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Font: heading/body/subheading/feature (default: heading)' : '字体: heading/body/subheading/feature (默认heading)'}</li>
+                        <li>${lang === 'en' ? 'Size: 24-96px (default: 48px)' : '大小: 24-96px (默认48px)'}</li>
+                        <li>${lang === 'en' ? 'Font Weight: 200-900 (default: 400)' : '字重: 200-900 (默认400)'}</li>
+                        <li>${lang === 'en' ? 'Line Height: display-tight/normal/loose (default: tight)' : '行高: display-tight/normal/loose (默认tight)'}</li>
+                        <li>${lang === 'en' ? 'Letter Spacing: heading-tight/normal/loose (default: normal)' : '字间距: heading-tight/normal/loose (默认normal)'}</li>
+                        <li>${lang === 'en' ? 'Text Transform: none/uppercase (default: none)' : '文本转换: none/uppercase (默认none)'}</li>
                 </ul>
-
-                <h3>1.5 Button Style</h3>
-                <h4>1.5.1 Primary Button (Primary Button) and Secondary Button (Secondary Button)</h4>
-                <ul>
-                    <li>Border Width</li>
-                    <li>Border Radius</li>
-                    <li>Font Weight</li>
-                    <li>Size</li>
-                    <li>Font Size</li>
+                    <h3>${t.buttonStyle}</h3>
+                    <h4>${t.buttonPrimary}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? 'Border Width' : '边框宽度'}</li>
+                        <li>${lang === 'en' ? 'Border Radius' : '圆角半径'}</li>
+                        <li>${lang === 'en' ? 'Font Weight' : '字重'}</li>
+                        <li>${lang === 'en' ? 'Size' : '尺寸'}</li>
+                        <li>${lang === 'en' ? 'Font Size' : '字体大小'}</li>
                 </ul>
-
-                <h3>1.6 Shopping Cart Settings</h3>
-                <h4>1.6.1 Basic Settings</h4>
-                <p><strong>Shopping Cart Type</strong></p>
-                <ul>
-                    <li>Page: Full Page</li>
-                    <li>Drawer: Drawer (default)</li>
+                    <h3>${t.shoppingCart}</h3>
+                    <h4>${t.cartBasic}</h4>
+                    <p><strong>${t.cartType}</strong></p>
+                    <ul>
+                        <li>${lang === 'en' ? 'Page: Full Page' : 'Page: 完整页面'}</li>
+                        <li>${lang === 'en' ? 'Drawer: Drawer (default)' : 'Drawer: 抽屉式 (默认)'}</li>
                 </ul>
-                <p><strong>Drawer Color Scheme</strong>: Select color scheme (default: scheme-1) - only displayed when
-                    Drawer Shopping Cart is selected</p>
-                <p><strong>Product Title Case</strong></p>
+                    <p><strong>${t.drawerColor}</strong></p>
+                    <p><strong>${t.productTitleCase}</strong></p>
                 <ul>
-                    <li>Default: Default</li>
-                    <li>Uppercase: Uppercase</li>
+                        <li>${lang === 'en' ? 'Default: Default' : 'Default: 默认'}</li>
+                        <li>${lang === 'en' ? 'Uppercase: Uppercase' : 'Uppercase: 大写'}</li>
                 </ul>
                 <ul>
-                    <li><strong>Price Font</strong>: body/subheading/heading/feature (default: subheading)</li>
-                    <li><strong>Automatically Open Shopping Cart Drawer</strong>: Open (default)/Close - automatically
-                        open the drawer after adding products</li>
-                    <li><strong>Display Shopping Cart Notes</strong>: Open (default)/Close</li>
-                    <li><strong>Display Discount Code Add</strong>: Open (default)/Close</li>
-                    <li><strong>Display Installments</strong>: Close (default)/Open</li>
-                    <li><strong>Display Quick Checkout Button</strong>: Open (default)/Close - Apple Pay, Google Pay
-                        etc.</li>
+                        <li>${lang === 'en' ? '<strong>Price Font</strong>: body/subheading/heading/feature (default: subheading)' : '<strong>价格字体</strong>: body/subheading/heading/feature (默认subheading)'}</li>
+                        <li>${lang === 'en' ? '<strong>Automatically Open Shopping Cart Drawer</strong>: Open (default)/Close - automatically open the drawer after adding products' : '<strong>自动打开购物车抽屉</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Shopping Cart Notes</strong>: Open (default)/Close' : '<strong>显示购物车备注</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Discount Code Add</strong>: Open (default)/Close' : '<strong>显示折扣码添加</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Installments</strong>: Close (default)/Open' : '<strong>显示分期付款</strong>: 关闭(默认)/开启'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Quick Checkout Button</strong>: Open (default)/Close - Apple Pay, Google Pay etc.' : '<strong>显示快速结账按钮</strong>: 开启(默认)/关闭'}</li>
                 </ul>
-
-                <h4>1.6.2 Currency Code</h4>
-                <p><strong>Display Currency Code in Shopping Cart Total</strong>: Open (default)/Close</p>
-
-                <h3>1.7 Component Styles</h3>
-                <h4>1.7.1 Input Box Style</h4>
-                <ul>
-                    <li><strong>Border Width</strong>: 0-4px (default: 2px)</li>
-                    <li><strong>Border Radius</strong>: 0-32px (default: 12px)</li>
+                    <h4>${t.currencyCode}</h4>
+                    <p><strong>${t.displayCurrency}</strong></p>
+                    <h3>${t.componentStyles}</h3>
+                    <h4>${t.inputBoxStyle}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Border Width</strong>: 0-4px (default: 2px)' : '<strong>边框宽度</strong>: 0-4px (默认2px)'}</li>
+                        <li>${lang === 'en' ? '<strong>Border Radius</strong>: 0-32px (default: 12px)' : '<strong>圆角半径</strong>: 0-32px (默认12px)'}</li>
                 </ul>
-
-                <h4>1.7.2 Card Style</h4>
-                <p><strong>Card Border Radius</strong>: 0-32px (default: 16px)</p>
-
-                <h4>1.7.3 Icon Settings</h4>
-                <p><strong>Icon Border Width</strong></p>
-                <ul>
-                    <li>Thin: Thin</li>
-                    <li>Normal: Normal (default)</li>
-                    <li>Thick: Thick</li>
+                    <h4>${t.cardStyle}</h4>
+                    <p>${lang === 'en' ? '<strong>Card Border Radius</strong>: 0-32px (default: 16px)' : '<strong>卡片圆角</strong>: 0-32px (默认16px)'}</p>
+                    <h4>${t.iconSettings}</h4>
+                    <p>${lang === 'en' ? '<strong>Icon Border Width</strong>' : '<strong>图标描边粗细</strong>'}</p>
+                    <ul>
+                        <li>${lang === 'en' ? 'Thin: Thin' : 'Thin: 细'}</li>
+                        <li>${lang === 'en' ? 'Normal: Normal (default)' : 'Normal: 正常 (默认)'}</li>
+                        <li>${lang === 'en' ? 'Thick: Thick' : 'Thick: 粗'}</li>
                 </ul>
-
-                <h3>1.8 Product Settings</h3>
-                <h4>1.8.1 Product Card</h4>
-                <ul>
-                    <li><strong>Quick Add Function</strong>: Open (default)/Close - add to cart directly on the product
-                        card</li>
-                    <li><strong>Mobile Quick Add</strong>: Open (default)/Close</li>
-                    <li><strong>Display Variant Images</strong>: Open (default)/Close - switch product image when
-                        selecting variant</li>
+                    <h3>${t.productSettings}</h3>
+                    <h4>${t.productCard}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Quick Add Function</strong>: Open (default)/Close - add to cart directly on the product card' : '<strong>快速添加功能</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Mobile Quick Add</strong>: Open (default)/Close' : '<strong>移动端快速添加</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Variant Images</strong>: Open (default)/Close - switch product image when selecting variant' : '<strong>显示变体图片</strong>: 开启(默认)/关闭'}</li>
                 </ul>
-
-                <h4>1.8.2 Variant Color Card</h4>
-                <ul>
-                    <li><strong>Display Variant Images on Color Card</strong>: Open (default)/Close</li>
-                    <li><strong>Color Card Width</strong>: 20-60px (default: 32px)</li>
-                    <li><strong>Color Card Height</strong>: 20-60px (default: 32px)</li>
-                    <li><strong>Color Card Border Radius</strong>: 0-50px (default: 8px)</li>
+                    <h4>${t.variantColorCard}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Display Variant Images on Color Card</strong>: Open (default)/Close' : '<strong>色卡显示变体图片</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Color Card Width</strong>: 20-60px (default: 32px)' : '<strong>色卡宽度</strong>: 20-60px (默认32px)'}</li>
+                        <li>${lang === 'en' ? '<strong>Color Card Height</strong>: 20-60px (default: 32px)' : '<strong>色卡高度</strong>: 20-60px (默认32px)'}</li>
+                        <li>${lang === 'en' ? '<strong>Color Card Border Radius</strong>: 0-50px (default: 8px)' : '<strong>色卡圆角</strong>: 0-50px (默认8px)'}</li>
                 </ul>
-
-                <h4>1.8.3 Price Display</h4>
-                <ul>
-                    <li><strong>Display Currency Code on Product Page</strong>: Close (default)/Open</li>
-                    <li><strong>Display Currency Code on Product Card</strong>: Close (default)/Open</li>
-                    <li><strong>Display Currency Code in Shopping Cart</strong>: Open (default)/Close</li>
+                    <h4>${t.priceDisplay}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Display Currency Code on Product Page</strong>: Close (default)/Open' : '<strong>产品页面显示货币代码</strong>: 关闭(默认)/开启'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Currency Code on Product Card</strong>: Close (default)/Open' : '<strong>产品卡片显示货币代码</strong>: 关闭(默认)/开启'}</li>
+                        <li>${lang === 'en' ? '<strong>Display Currency Code in Shopping Cart</strong>: Open (default)/Close' : '<strong>购物车商品显示货币代码</strong>: 开启(默认)/关闭'}</li>
                 </ul>
-
-                <h3>1.9 Badge Settings</h3>
-                <ul>
-                    <li><strong>Display Badge</strong>: Open (default)/Close - display "Sold Out", "Promotion" etc.
-                        badges</li>
-                    <li><strong>Sold Out Badge Color Scheme</strong>: scheme-1(default)</li>
-                    <li><strong>Promotion Badge Color Scheme</strong>: scheme-1(default)</li>
-                    <li><strong>Badge Border Radius</strong>: 0-50px (default: 12px)</li>
+                    <h3>${t.badgeSettings}</h3>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Display Badge</strong>: Open (default)/Close - display "Sold Out", "Promotion" etc. badges' : '<strong>显示徽章</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Sold Out Badge Color Scheme</strong>: scheme-1(default)' : '<strong>售罄徽章配色方案</strong>: scheme-1(默认)'}</li>
+                        <li>${lang === 'en' ? '<strong>Promotion Badge Color Scheme</strong>: scheme-1(default)' : '<strong>促销徽章配色方案</strong>: scheme-1(默认)'}</li>
+                        <li>${lang === 'en' ? '<strong>Badge Border Radius</strong>: 0-50px (default: 12px)' : '<strong>徽章圆角</strong>: 0-50px (默认12px)'}</li>
                 </ul>
-
-                <h3>1.10 Search Function</h3>
-                <h4>1.10.1 Basic Settings</h4>
-                <ul>
-                    <li><strong>Enable Search</strong>: Open (default)/Close</li>
-                    <li><strong>Enable Search Modal</strong>: Open (default)/Close - modal search interface</li>
-                    <li><strong>Search Modal Color Scheme</strong>: scheme-1(default)</li>
+                    <h3>${t.searchFunction}</h3>
+                    <h4>${t.searchBasic}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Enable Search</strong>: Open (default)/Close' : '<strong>启用搜索</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Enable Search Modal</strong>: Open (default)/Close - modal search interface' : '<strong>启用搜索模态框</strong>: 开启(默认)/关闭'}</li>
+                        <li>${lang === 'en' ? '<strong>Search Modal Color Scheme</strong>: scheme-1(default)' : '<strong>搜索模态框配色方案</strong>: scheme-1(默认)'}</li>
                 </ul>
-
-                <h4>1.10.2 Layout Settings</h4>
-                <ul>
-                    <li><strong>Desktop Grid Columns</strong>: 1-5 columns (default: 3 columns)</li>
-                    <li><strong>Mobile Grid Columns</strong>: 1-5 columns (default: 2 columns)</li>
-                    <li><strong>Search Results</strong>: 3-12 (default: 6)</li>
+                    <h4>${t.searchLayout}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Desktop Grid Columns</strong>: 1-5 columns (default: 3 columns)' : '<strong>桌面端网格列数</strong>: 1-5列 (默认3列)'}</li>
+                        <li>${lang === 'en' ? '<strong>Mobile Grid Columns</strong>: 1-5 columns (default: 2 columns)' : '<strong>移动端网格列数</strong>: 1-5列 (默认2列)'}</li>
+                        <li>${lang === 'en' ? '<strong>Search Results</strong>: 3-12 (default: 6)' : '<strong>搜索结果数量</strong>: 3-12个 (默认6个)'}</li>
                 </ul>
-
-                <h4>1.10.3 Display Options</h4>
-                <ul>
-                    <li><strong>Display Product Supplier</strong>: Close (default)/Open</li>
-                    <li><strong>Desktop Media Width</strong>: 0-500px (default: 200px)</li>
-                    <li><strong>Mobile Media Width</strong>: 0-500px (default: 50px)</li>
+                    <h4>${t.searchDisplay}</h4>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Display Product Supplier</strong>: Close (default)/Open' : '<strong>显示产品供应商</strong>: 关闭(默认)/开启'}</li>
+                        <li>${lang === 'en' ? '<strong>Desktop Media Width</strong>: 0-500px (default: 200px)' : '<strong>桌面端媒体宽度</strong>: 0-500px (默认200px)'}</li>
+                        <li>${lang === 'en' ? '<strong>Mobile Media Width</strong>: 0-500px (default: 50px)' : '<strong>移动端媒体宽度</strong>: 0-500px (默认50px)'}</li>
                 </ul>
-
-                <h3>1.11 Animation Effect</h3>
-                <ul>
-                    <li><strong>Enable Animation</strong>: Open (default)/Close - global animation switch</li>
-                    <li><strong>Animation Duration</strong>
-                        <ul>
-                            <li>Fast: Fast</li>
-                            <li>Normal: Normal (default)</li>
-                            <li>Slow: Slow</li>
+                    <h3>${t.animationEffect}</h3>
+                    <ul>
+                        <li>${lang === 'en' ? '<strong>Enable Animation</strong>: Open (default)/Close - global animation switch' : '<strong>启用动画</strong>: 开启(默认)/关闭'}</li>
+                        <li><strong>${lang === 'en' ? 'Animation Duration' : '动画持续时间'}</strong>
+                            <ul>
+                                <li>${lang === 'en' ? 'Fast: Fast' : 'Fast: 快速'}</li>
+                                <li>${lang === 'en' ? 'Normal: Normal (default)' : 'Normal: 正常 (默认)'}</li>
+                                <li>${lang === 'en' ? 'Slow: Slow' : 'Slow: 慢速'}</li>
                         </ul>
                     </li>
                 </ul>
             </section>
 
             <section class="section" id="header">
-                <h2>2. Header Section</h2>
-
-                <h3>2.1 Announcement Bar</h3>
-                <p>Optional Configuration: Color Preset, Mobile/Desktop Element Height</p>
-
-                <h4>2.1.1 Block Settings</h4>
-                <p>Optional Marquee Effect and Carousel Effect (Note: You need to delete one block to change)</p>
-
-                <h3>2.2 Header Section</h3>
-                <p>Optional Configuration: Color Preset, Title Font Style Preset, Menu Title Style Preset; menu
-                    selection, sticky navigation related configuration; mobile/desktop element height</p>
-
-                <h4>2.2.1 Block Settings</h4>
-                <p><strong>Mega Menu</strong>: Converts the Menu corresponding to the Link Title into a Mega Menu;
-                    Optional Configuration: 3图文modules</p>
+                    <h2>${t.headerSection}</h2>
+                    <h3>${t.announcementBar}</h3>
+                    <p>${t.announcementDesc}</p>
+                    <h4>${t.blockSettings}</h4>
+                    <p>${t.blockSettingsDesc}</p>
+                    <h3>${t.headerSection2}</h3>
+                    <p>${t.headerSection2Desc}</p>
+                    <h4>${t.blockSettings2}</h4>
+                    <p><strong>${t.megaMenu}</strong></p>
             </section>
 
             <section class="section" id="footer">
-                <h2>3. Footer Section</h2>
-                <p>Optional Configuration: Color Preset; menu selection; desktop row/column spacing, mobile row/column
-                    spacing</p>
-
-                <h3>3.1.1 Block Settings</h3>
-
-                <h4>Button</h4>
-                <p>Optional Configuration: button text, redirect link, whether to enter a new page</p>
-
-                <h4>Text</h4>
-                <p>Optional Configuration: text content, using H1 tag (Use with caution! It will convert HTML tags into
-                    H1 tags, and using it carelessly will cause SEO issues).</p>
-                <h4>Menu (Footer menu)</h4>
-                <p>Optional Configuration: Menu links, Menu top title, whether to display mobile fold box icon, whether
-                    to automatically expand on mobile, title and menu link text font preset</p>
-
-                <h4>Social Medias</h4>
-                <p>New Social Media block, can configure link, Icon will automatically display according to the type of
-                    link.</p>
-
-                <h4>Column (can configure containers arranged vertically)</h4>
-                <p>Optional Configuration: arrangement direction, container length/height selection, horizontal/vertical
-                    alignment, desktop/mobile sub-element spacing.</p>
+                    <h2>${t.footerSection}</h2>
+                    <p>${t.footerDesc}</p>
+                    <h3>${t.blockSettings3}</h3>
+                    <h4>${t.button}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: button text, redirect link, whether to enter a new page' : '可选配置：button文案，跳转链接，是否进入新的页面'}</p>
+                    <h4>${t.text}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: text content, using H1 tag (Use with caution! It will convert HTML tags into H1 tags, and using it carelessly will cause SEO issues).' : '可选配置：文案内容，使用H1标签（慎用! 会将HTML标签变成H1标签，随意使用会引发SEO问题）'}</p>
+                    <h4>${t.menu}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: Menu links, Menu top title, whether to display mobile fold box icon, whether to automatically expand on mobile, title and menu link text font preset' : '可选配置：Menu 链接，Menu的顶部标题，是否展示移动端折叠框icon，是否在移动端自动展开，标题与menulink文字的字体预设'}</p>
+                    <h4>${t.socialMedias}</h4>
+                    <p>${lang === 'en' ? 'New Social Media block, can configure link, Icon will automatically display according to the type of link.' : '新增Social Media block，可配置链接，Icon会自动根据链接的类型展示'}</p>
+                    <h4>${t.column}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: arrangement direction, container length/height selection, horizontal/vertical alignment, desktop/mobile sub-element spacing.' : '可选配置：排列方向，容器长度/高度选择，水平/垂直对齐方式，桌面端/移动端子元素的间距'}</p>
             </section>
 
             <section class="section" id="custom-section">
-                <h2>4. Custom Section</h2>
-                <p>Default Configuration: page width, container height, color preset, background image configuration,
-                    desktop/mobile top and bottom spacing.</p>
-
-                <h3>4.1 Block Settings</h3>
-                <p>Can configure all common blocks in the current theme.</p>
+                    <h2>${t.customSection}</h2>
+                    <p>${t.customDesc}</p>
+                    <h3>${t.blockSettings4}</h3>
+                    <p>${lang === 'en' ? 'Can configure all common blocks in the current theme.' : '可以配置当前theme内所有通用的block'}</p>
             </section>
 
             <section class="section" id="marquee">
-                <h2>5. Marquee</h2>
-                <p>Default Configuration: page width, container height, color preset, background image configuration,
-                    desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.marquee}</h2>
+                    <p>${t.customDesc}</p>
                 <h3>5.1 Block Settings</h3>
-                <p>Can configure all common blocks in the current theme.</p>
+                    <p>${lang === 'en' ? 'Can configure all common blocks in the current theme.' : '可以配置当前theme内所有通用的block'}</p>
             </section>
 
             <section class="section" id="media-group">
-                <h2>6. Media Group</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.mediaGroup}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>6.1 Block Settings</h3>
-
-                <h4>Row/Column (Same as before)</h4>
-
-                <h4>Media Group</h4>
-                <p>Optional Configuration: color preset; divide the current container into several columns; space
-                    between mobile/desktop images; whether to use custom configuration for the height of sub-element
-                    images (if yes, the base height of the sub-element container is configurable, if 100px is
-                    configured, then the height of the sub-container is the value of Media Column multiplied by 100px;
-                    if no, then the base height of the sub-container is the value of the width of each column:
-                    approximately 1:1); desktop/mobile top and bottom spacing.</p>
-
-                <p><strong>Sub-Block (Media Group Item)</strong></p>
-                <p>Optional Configuration: mobile/desktop media image and video configuration, and image redirect link;
-                    color preset configuration, border radius; desktop/mobile can configure how many rows and columns
-                    (the number of columns is calculated according to the number of columns into which the Media Group
-                    is divided, and the number of rows is calculated according to the base height multiplied by the
-                    preset value).</p>
+                    <h4>${lang === 'en' ? 'Row/Column (Same as before)' : 'Row/Column（同之前）'}</h4>
+                    <h4>${lang === 'en' ? 'Media Group' : 'Media Group'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: color preset; divide the current container into several columns; space between mobile/desktop images; whether to use custom configuration for the height of sub-element images (if yes, the base height of the sub-element container is configurable, if 100px is configured, then the height of the sub-container is the value of Media Column multiplied by 100px; if no, then the base height of the sub-container is the value of the width of each column: approximately 1:1); desktop/mobile top and bottom spacing.' : '可选配置：颜色预设；将当前容器等比分成几列；移动端/桌面端图片之间的间距；子元素图片的高度是否使用自定义配置（如果是，子元素容器的基础高度为可配置的，假如配置了100px，那么子容器的高度为Media Column的数值乘以100px；如果为否，那么当子容器的基础高度为每列宽度的数值：近似1:1）；桌面端/移动端上下间距'}</p>
+                    <p><strong>${lang === 'en' ? 'Sub-Block (Media Group Item)' : '子Block（Media Group Item）'}</strong></p>
+                    <p>${lang === 'en' ? 'Optional Configuration: mobile/desktop media image and video configuration, and image redirect link; color preset configuration, border radius; desktop/mobile can configure how many rows and columns (the number of columns is calculated according to the number of columns into which the Media Group is divided, and the number of rows is calculated according to the base height multiplied by the preset value).' : '可选配置项：移动端/桌面端媒体图片和视频配置，以及图片跳转的链接；颜色预设配置，边框倒角；桌面端/移动端可配置占几行几列（列数按照Media Group等比分的列数计算，行数按照基础高度乘以预设的数值计算）'}</p>
             </section>
 
             <section class="section" id="shop-the-look">
-                <h2>7. Shop the Look</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.shopTheLook}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>7.1 Block Settings</h3>
-
-                <h4>Shop the Look</h4>
-                <p>Optional Configuration: banner image and product carousel layout ratio; space between desktop and
-                    mobile two containers; product display configuration, product List and collection two can choose one
-                    (list weight is higher than collection; please note: the number of <strong>Shop the Look
-                        Button</strong> needs to be the same as the number of products)</p>
-
-                <h4>Sub-Block (Shop the Look Points)</h4>
-                <p>Optional Configuration: mobile/desktop image configuration, mobile/desktop border radius
-                    configuration, whether to render the height of the image container according to the ratio of the
-                    image (if no, the height of the mobile/desktop image container can be customized); desktop/mobile
-                    top and bottom spacing.</p>
-
-                <h4>Sub-Block (Shop the Look Button)</h4>
-                <p>Optional Configuration: relative distance from the top and left of the desktop/mobile button, size of
-                    the desktop/mobile button, color related to the button.</p>
-
-                <h4>Sub-Block (Product Card)</h4>
-                <p>Optional Configuration: color preset, border radius, whether to render the product image according to
-                    the original ratio (if no, the height of the desktop/mobile container can be customized);
-                    desktop/mobile top and bottom spacing.</p>
-
-                <h4>Sub-Block (Product Title)</h4>
-                <p>Optional Configuration: associated product (default: the product of the current card), other
-                    configuration related to Text.</p>
-
-                <h4>Sub-Block (Product Price)</h4>
-                <p>Optional Configuration: associated product (default: the product of the current card), font style
-                    preset.</p>
-
-                <h4>Sub-Block (Product Form)</h4>
-                <p>Optional Configuration: associated product (default: the product of the current card).</p>
-
-                <h4>Sub-Block (Product Quantity、Product Add to Cart、Product Checkout)</h4>
-
-                <h4>Sub-Block (Product Variant)</h4>
-                <p>Optional Configuration: associated product, whether to display the name of the variant button,
-                    whether to only display the color variant, variant button style.</p>
+                    <h4>${lang === 'en' ? 'Shop the Look' : 'Shop the Look'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: banner image and product carousel layout ratio; space between desktop and mobile two containers; product display configuration, product List and collection two can choose one (list weight is higher than collection; please note: the number of Shop the Look Button needs to be the same as the number of products)' : '可选配置项：banner图片与产品轮播的布局比例；桌面端和移动端两个容器之间的间距；产品展示配置，产品List和collection二选一即可（list权重高于collection；请注意：Shop the Look Button的数量需要与产品的数量一致）'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Shop the Look Points)' : '子Block（Shop the Look Points）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: mobile/desktop image configuration, mobile/desktop border radius configuration, whether to render the height of the image container according to the ratio of the image (if no, the height of the mobile/desktop image container can be customized); desktop/mobile top and bottom spacing.' : '可选配置项：移动端/桌面端图片配置，移动端的桌面端边框倒角配置，图片容器的高度是否按照图片的比例渲染（为否的时候可以自定义移动端和桌面端的图片容器的高度）'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Shop the Look Button)' : '子Block（Shop the Look Button）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: relative distance from the top and left of the desktop/mobile button, size of the desktop/mobile button, color related to the button.' : '可选配置项：桌面端/移动端的距离顶部和距离左侧的相对距离，桌面端/移动端按钮的大小，按钮的颜色相关'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Card)' : '子Block（Product Card）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: color preset, border radius, whether to render the product image according to the original ratio (if no, the height of the desktop/mobile container can be customized); desktop/mobile top and bottom spacing.' : '可选配置项：颜色预设，边框倒角，产品图片是否按照原比例渲染（为否的时候可以自定义桌面端和移动端的容器高度）'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Title)' : '子Block（Product Title）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: associated product (default: the product of the current card), other configuration related to Text.' : '可选配置项：关联的产品（默认为当前卡片的产品），其余配置同Text相关配置'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Price)' : '子Block（Product Price）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: associated product (default: the product of the current card), font style preset.' : '可选配置项：关联的产品（默认为当前卡片的产品），字体样式预设'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Form)' : '子Block（Product Form）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: associated product (default: the product of the current card).' : '可选配置项：关联的产品（默认为当前卡片的产品）'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Quantity、Product Add to Cart、Product Checkout)' : '子Block（Product Quantity、Product Add to Cart、Product Checkout）'}</h4>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Variant)' : '子Block（Product Variant）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: associated product, whether to display the name of the variant button, whether to only display the color variant, variant button style.' : '可选配置项：关联的产品，是否展示变体按钮的名称，是否只展示颜色变体，变体按钮的样式'}</p>
             </section>
 
             <section class="section" id="slideshow">
-                <h2>8. Slideshow</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.slideshow}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>8.1 Block Settings</h3>
-
-                <h4>Carousel</h4>
-                <p>Optional Configuration: color preset, switch style (left/right switch, transition gradient), whether
-                    to display paginator/left/right switch arrow, whether to automatically scroll, mobile/desktop
-                    container height setting.</p>
-
-                <h4>Sub-Block (Slide)</h4>
-                <p>Optional Configuration: content alignment, background image/video related.</p>
+                    <h4>${lang === 'en' ? 'Carousel' : 'Carousel'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: color preset, switch style (left/right switch, transition gradient), whether to display paginator/left/right switch arrow, whether to automatically scroll, mobile/desktop container height setting.' : '可选配置：颜色预设，切换样式（左右切换、过渡渐变），是否展示分页器/左右切换箭头，是否自动轮播，移动端/桌面端容器高度设置'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Slide)' : '子Block（Slide）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: content alignment, background image/video related.' : '可选配置：内容对齐方式，背景图片/视频相关'}</p>
             </section>
 
             <section class="section" id="before-after">
-                <h2>9. Before After</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.beforeAfter}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>9.1 Block Settings</h3>
-
-                <h4>Row/Column</h4>
-                <p>Same as before.</p>
-
-                <h4>Before After Image</h4>
-                <p>Optional Configuration: offset of the draggable middle axis when loading, border radius,
-                    mobile/desktop image container height, desktop/mobile top and bottom spacing.</p>
-
-                <h4>Sub-Block (Before Image、After Image)</h4>
-                <p>Optional Configuration: color preset, desktop/mobile image, image shadow mask.</p>
+                    <h4>${lang === 'en' ? 'Row/Column' : 'Row/Column'}</h4>
+                    <p>${t.sameAsBefore}</p>
+                    <h4>${lang === 'en' ? 'Before After Image' : 'Before After Image'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: offset of the draggable middle axis when loading, border radius, mobile/desktop image container height, desktop/mobile top and bottom spacing.' : '可选配置：可拖拽的中轴线默认加载时候的偏移量，边框倒角，移动端/桌面端图片容器高度，桌面端/移动端上下间距'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Before Image、After Image)' : '子Block（Before Image、After Image）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: color preset, desktop/mobile image, image shadow mask.' : '可选配置：颜色预设，桌面端/移动端图片，图片阴影遮罩'}</p>
             </section>
 
             <section class="section" id="blog-posts">
-                <h2>10. Blog Posts</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.blogPosts}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>10.1 Block Settings</h3>
-
-                <h4>Row/Column</h4>
-                <p>Same as before.</p>
-
-                <h4>Blog Post List</h4>
-                <p>Optional Configuration: blog, color preset, layout configuration (flat list, carousel), can configure
-                    the number of columns displayed on desktop and mobile, spacing between each blog.</p>
-
-                <h4>Sub-Block (Article Card)</h4>
-                <p>Optional Configuration: color preset, border radius, mobile/desktop image container height (can
-                    choose to render according to the image ratio).</p>
-
-                <h4>Sub-Block (Article Title,Article Author,Article Date)</h4>
-                <p>All configurations are aligned with Text.</p>
+                    <h4>${lang === 'en' ? 'Row/Column' : 'Row/Column'}</h4>
+                    <p>${t.sameAsBefore}</p>
+                    <h4>${lang === 'en' ? 'Blog Post List' : 'Blog Post List'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: blog, color preset, layout configuration (flat list, carousel), can configure the number of columns displayed on desktop and mobile, spacing between each blog.' : '可选配置：博客，颜色预设，布局配置（平铺列表、轮播图），可配置桌面端和移动端的展示列数，每个博客之间的间距'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Article Card)' : '子Block（Article Card）'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: color preset, border radius, mobile/desktop image container height (can choose to render according to the image ratio).' : '可选配置：颜色预设，边框倒角，移动端/桌面端图片容器高度（可以选择适应图片比例渲染）'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Article Title,Article Author,Article Date)' : '子Block（Article Title，Article Author，Article Date）'}</h4>
+                    <p>${lang === 'en' ? 'All configurations are aligned with Text.' : '所有配置均与Text对齐'}</p>
             </section>
 
             <section class="section" id="collapsible-list">
-                <h2>11. Collapsible List</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.collapsibleList}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>11.1 Block Settings</h3>
-
-                <h4>Text</h4>
-                <p>Same as before.</p>
-
-                <h4>Collapsible</h4>
-                <p>Optional Configuration: whether to default expand, whether to display border (border can display top
-                    border and bottom border), title and title font style, spacing between desktop and mobile.</p>
+                    <h4>${t.text}</h4>
+                    <p>${t.sameAsBefore}</p>
+                    <h4>${lang === 'en' ? 'Collapsible' : 'Collapsible'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: whether to default expand, whether to display border (border can display top border and bottom border), title and title font style, spacing between desktop and mobile.' : '可选配置：是否默认展开，是否展示边框（边框可选展示上边框和下边框），标题和标题字体样式，桌面端和移动端的间距'}</p>
             </section>
 
             <section class="section" id="collection-products">
-                <h2>12. Collection Products</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.collectionProducts}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>12.1 Block Settings</h3>
-
-                <h4>Product Card List</h4>
-                <p>Optional Configuration: collection and product list (for displaying products), color preset, display
-                    layout (flat list, carousel), number of columns displayed on each row on desktop and mobile, spacing
-                    between each element.</p>
-
-                <h4>Sub-Block (Product Card)</h4>
-                <p>Same as before.</p>
+                    <h4>${lang === 'en' ? 'Product Card List' : 'Product Card List'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: collection and product list (for displaying products), color preset, display layout (flat list, carousel), number of columns displayed on each row on desktop and mobile, spacing between each element.' : '可选配置项：集合以及产品列表（用于展示产品），颜色预设，展示布局（平铺列表、轮播图），桌面端和移动端每行展示的列数，每个元素之间的间距'}</p>
+                    <h4>${lang === 'en' ? 'Sub-Block (Product Card)' : '子block（Product Crad）'}</h4>
+                    <p>${t.sameAsBefore}</p>
             </section>
 
             <section class="section" id="collections-list">
-                <h2>13. Collections List</h2>
-                <p>Default Configuration: collection selection; color preset; collection image container height;
-                    collection arrangement form (flat list, carousel), number of columns displayed on each row on
-                    desktop and mobile; spacing between elements; desktop/mobile top and bottom spacing.</p>
+                    <h2>${t.collectionsList}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: collection selection; color preset; collection image container height; collection arrangement form (flat list, carousel), number of columns displayed on each row on desktop and mobile; spacing between elements; desktop/mobile top and bottom spacing.' : '默认配置项：集合选择；颜色预设；集合图片容器高度；集合的排列形式（平铺列表，轮播图），移动端桌面端每行展示的列数；元素与元素之间的间距；桌面端/移动端上下间距'}</p>
             </section>
 
             <section class="section" id="media-width-text">
-                <h2>14. Media Width Text</h2>
-                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.mediaWidthText}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset, desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设，桌面端/移动端上下间距'}</p>
                 <h3>14.1 Block Settings</h3>
-
-                <h4>Media</h4>
-                <p>Optional Configuration: mobile/desktop video image configuration, border radius configuration,
-                    whether to render according to the original ratio (if no, the height of the media container can be
-                    customized).</p>
-
-                <h4>Column、Row、Text</h4>
-                <p>Same as before.</p>
+                    <h4>${lang === 'en' ? 'Media' : 'Media'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: mobile/desktop video image configuration, border radius configuration, whether to render according to the original ratio (if no, the height of the media container can be customized).' : '可选配置项：移动端/桌面端视频图片配置，边框倒角配置，是否按照原比例渲染（否的话可自定义媒体容器高度）'}</p>
+                    <h4>${lang === 'en' ? 'Column、Row、Text' : 'Column 、Row、Text'}</h4>
+                    <p>${t.sameAsBefore}</p>
             </section>
 
             <section class="section" id="rich-text">
-                <h2>15. Rich Text</h2>
-                <p>Default Configuration: same as Custom Section.</p>
+                    <h2>${t.richText}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: same as Custom Section.' : '默认配置项：与Custom Section一致'}</p>
             </section>
 
             <section class="section" id="video">
-                <h2>16. Video</h2>
-                <p>Default Configuration: color preset; page width setting; desktop/mobile top and bottom spacing.</p>
-
+                    <h2>${t.video}</h2>
+                    <p>${lang === 'en' ? 'Default Configuration: color preset; page width setting; desktop/mobile top and bottom spacing.' : '默认配置项：颜色预设；页面宽度设置；桌面端/移动端上下间距'}</p>
                 <h3>16.1 Block Settings</h3>
-
-                <h4>Video</h4>
-                <p>Optional Configuration: video type, and corresponding url; can configure video cover and cover mask;
-                    video control related operations; can configure border radius, and mobile/desktop container height.
-                </p>
+                    <h4>${lang === 'en' ? 'Video' : 'Video'}</h4>
+                    <p>${lang === 'en' ? 'Optional Configuration: video type, and corresponding url; can configure video cover and cover mask; video control related operations; can configure border radius, and mobile/desktop container height.' : '可选配置项：video的类型，以及对应的url；可配置视频封面以及封面遮罩；视频控制相关操作；可配置边框倒角，以及移动端/桌面端容器高度'}</p>
             </section>
 
-            <section class="more-info" id="video">
-                <h2>More Information</h2>
-                <p>More Information</p>
+            <section class="section" id="more-info">
+                    <h2>${t.moreInfo}</h2>
+                    <p>${t.moreInfo}</p>
             </section>
-        </main>
-    </div>
+            `;
 
-    <script>
-        // 生成导航菜单
+            updateTitle();
+            setupNavigation();
+        }
+
+        function updateTitle() {
+            const title = document.querySelector('.sidebar h1');
+            title.textContent = texts[currentLang].title;
+        }
+
+        function setupNavigation() {
+            const nav = document.getElementById('nav');
         const content = document.getElementById('content');
-        const nav = document.getElementById('nav');
         const sections = content.querySelectorAll('h2');
 
-        sections.forEach((section, index) => {
+            nav.innerHTML = '';
+
+            sections.forEach((section) => {
             const link = document.createElement('a');
             link.textContent = section.textContent;
             link.href = '#' + section.parentElement.id;
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-
-                // 移除所有active类
                 document.querySelectorAll('.sidebar nav a').forEach(a => {
                     a.classList.remove('active');
                 });
-
-                // 添加active类到当前链接
                 link.classList.add('active');
-
-                // 滚动到对应部分
                 const target = document.getElementById(section.parentElement.id);
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
-
             nav.appendChild(link);
         });
 
-        // 监听滚动，高亮当前章节
+            // Setup scroll observer
         const observerOptions = {
             root: null,
             rootMargin: '-20% 0px -70% 0px',
-            threshold: 0
+            threshold: [0, 0.1, 0.5, 1]
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
+        // Function to update active navigation
+        function updateActiveNav() {
+            const sections = Array.from(document.querySelectorAll('.section'));
+            const viewportHeight = window.innerHeight;
+            
+            // Find the section that's currently in the viewport top area
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const section = sections[i];
+                const rect = section.getBoundingClientRect();
+                
+                // A section is active if it's in the top 40% of the viewport or at the bottom
+                if (rect.top <= viewportHeight * 0.4 && rect.top + rect.height > 0) {
+                    const id = section.id;
                     document.querySelectorAll('.sidebar nav a').forEach(a => {
                         a.classList.remove('active');
                         if (a.getAttribute('href') === '#' + id) {
                             a.classList.add('active');
                         }
                     });
+                    break;
                 }
-            });
-        }, observerOptions);
+            }
+        }
 
-        // 观察所有section
-        document.querySelectorAll('.section').forEach(section => {
+        const observer = new IntersectionObserver(updateActiveNav, observerOptions);
+
+            document.querySelectorAll('.section').forEach(section => {
             observer.observe(section);
         });
+        
+        // Also listen to scroll events for more responsive updates
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        }
+
+        function setupLanguageSwitcher() {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    currentLang = lang;
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    generateContent();
+                });
+            });
+        }
+
+        init();
     </script>
 </body>
 
