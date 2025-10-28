@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Theme User Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            background: #fafafa;
+            border-right: 1px solid #e5e5e5;
+            padding: 30px 20px;
+        }
+
+        .sidebar h1 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #000;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #000;
+        }
+
+        .sidebar nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .sidebar nav a:hover {
+            background: #e8e8e8;
+            color: #000;
+        }
+
+        .sidebar nav a.active {
+            background: #000;
+            color: #fff;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin: 40px 0 20px 0;
+            padding-top: 20px;
+            color: #000;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .content h2:first-child {
+            margin-top: 0;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+            color: #333;
+        }
+
+        .content h4 {
+            font-size: 16px;
+            margin: 20px 0 10px 0;
+            color: #555;
+        }
+
+        .content p,
+        .content ul {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .content ul {
+            padding-left: 25px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .content strong {
+            color: #000;
+            font-weight: 600;
+        }
+
+        .content blockquote {
+            border-left: 4px solid #000;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #666;
+        }
+
+        .section {
+            scroll-margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Meet Theme</h1>
+            <nav id="nav"></nav>
+        </aside>
+
+        <main class="content" id="content">
+            <section class="section" id="theme-settings">
+                <h2>1. Theme settings</h2>
+
+                <h3>1.1 Logo Setting</h3>
+                <p>Upload logo and favicon, you can customize the logo size for desktop and mobile</p>
+
+                <h3>1.2 Page Layout Setting</h3>
+
+                <h4>1.2.1 Width Setting</h4>
+                <p>Configure the maximum width of the page, and the safe distance on the left and right sides of the
+                    page</p>
+
+                <h4>1.2.2 Responsive Scaling Setting</h4>
+                <p>Configure the scaling ratio of the page on the tablet and mobile (if you don't accurately configure
+                    the mobile size)</p>
+
+                <h3>1.3 Color Scheme</h3>
+                <p>The theme uses a color scheme system, supports creating multiple color schemes. Each scheme contains
+                    the following color definitions:</p>
+
+                <h4>1.3.1 Basic Color</h4>
+                <ul>
+                    <li>Background Color</li>
+                    <li>Title Color</li>
+                    <li>Text Color</li>
+                    <li>Primary Color</li>
+                    <li>Primary Color Hover</li>
+                    <li>Border Color</li>
+                    <li>Shadow Color</li>
+                </ul>
+
+                <h4>1.3.2 Primary Button and Secondary Button</h4>
+                <ul>
+                    <li>Background Color Text Color</li>
+                    <li>Border Color</li>
+                    <li>Hover Background Color</li>
+                    <li>Hover Text Color</li>
+                    <li>Hover Border Color</li>
+                </ul>
+
+                <h4>1.3.3 Input Box</h4>
+                <ul>
+                    <li>Background Color</li>
+                    <li>Text Color</li>
+                    <li>Border Color</li>
+                    <li>Hover Background Color</li>
+                </ul>
+
+                <h4>1.3.4 Product Variant</h4>
+                <ul>
+                    <li>Background Color</li>
+                    <li>Text Color</li>
+                    <li>Border Color</li>
+                    <li>Hover Background Color</li>
+                    <li>Hover Text Color</li>
+                    <li>Hover Border Color</li>
+                </ul>
+
+                <h4>1.3.5 Selected State</h4>
+                <ul>
+                    <li>Background Color</li>
+                    <li>Text Color</li>
+                    <li>Border Color</li>
+                    <li>Hover Background Color</li>
+                    <li>Hover Text Color</li>
+                    <li>Hover Border Color</li>
+                </ul>
+
+                <h3>1.4 Font Related</h3>
+
+                <h4>1.4.1 Font Selection</h4>
+                <p>The theme supports 4 font categories:</p>
+                <ul>
+                    <li>Body Font</li>
+                    <li>Subheading Font</li>
+                    <li>Heading Font</li>
+                    <li>Feature Font</li>
+                </ul>
+
+                <h4>1.4.2 Paragraph Font Setting</h4>
+                <ul>
+                    <li>Font Size</li>
+                    <li>Line Height Option</li>
+                    <li>Font Weight</li>
+                </ul>
+
+                <h4>1.4.3 Title Font Setting (H1~H6)</h4>
+                <ul>
+                    <li>Font: heading/body/subheading/feature (default: heading)</li>
+                    <li>Size: 24-96px (default: 48px)</li>
+                    <li>Font Weight: 200-900 (default: 400)</li>
+                    <li>Line Height: display-tight/normal/loose (default: tight)</li>
+                    <li>Letter Spacing: heading-tight/normal/loose (default: normal)</li>
+                    <li>Text Transform: none/uppercase (default: none)</li>
+                </ul>
+
+                <h3>1.5 Button Style</h3>
+                <h4>1.5.1 Primary Button (Primary Button) and Secondary Button (Secondary Button)</h4>
+                <ul>
+                    <li>Border Width</li>
+                    <li>Border Radius</li>
+                    <li>Font Weight</li>
+                    <li>Size</li>
+                    <li>Font Size</li>
+                </ul>
+
+                <h3>1.6 Shopping Cart Settings</h3>
+                <h4>1.6.1 Basic Settings</h4>
+                <p><strong>Shopping Cart Type</strong></p>
+                <ul>
+                    <li>Page: Full Page</li>
+                    <li>Drawer: Drawer (default)</li>
+                </ul>
+                <p><strong>Drawer Color Scheme</strong>: Select color scheme (default: scheme-1) - only displayed when
+                    Drawer Shopping Cart is selected</p>
+                <p><strong>Product Title Case</strong></p>
+                <ul>
+                    <li>Default: Default</li>
+                    <li>Uppercase: Uppercase</li>
+                </ul>
+                <ul>
+                    <li><strong>Price Font</strong>: body/subheading/heading/feature (default: subheading)</li>
+                    <li><strong>Automatically Open Shopping Cart Drawer</strong>: Open (default)/Close - automatically
+                        open the drawer after adding products</li>
+                    <li><strong>Display Shopping Cart Notes</strong>: Open (default)/Close</li>
+                    <li><strong>Display Discount Code Add</strong>: Open (default)/Close</li>
+                    <li><strong>Display Installments</strong>: Close (default)/Open</li>
+                    <li><strong>Display Quick Checkout Button</strong>: Open (default)/Close - Apple Pay, Google Pay
+                        etc.</li>
+                </ul>
+
+                <h4>1.6.2 Currency Code</h4>
+                <p><strong>Display Currency Code in Shopping Cart Total</strong>: Open (default)/Close</p>
+
+                <h3>1.7 Component Styles</h3>
+                <h4>1.7.1 Input Box Style</h4>
+                <ul>
+                    <li><strong>Border Width</strong>: 0-4px (default: 2px)</li>
+                    <li><strong>Border Radius</strong>: 0-32px (default: 12px)</li>
+                </ul>
+
+                <h4>1.7.2 Card Style</h4>
+                <p><strong>Card Border Radius</strong>: 0-32px (default: 16px)</p>
+
+                <h4>1.7.3 Icon Settings</h4>
+                <p><strong>Icon Border Width</strong></p>
+                <ul>
+                    <li>Thin: Thin</li>
+                    <li>Normal: Normal (default)</li>
+                    <li>Thick: Thick</li>
+                </ul>
+
+                <h3>1.8 Product Settings</h3>
+                <h4>1.8.1 Product Card</h4>
+                <ul>
+                    <li><strong>Quick Add Function</strong>: Open (default)/Close - add to cart directly on the product
+                        card</li>
+                    <li><strong>Mobile Quick Add</strong>: Open (default)/Close</li>
+                    <li><strong>Display Variant Images</strong>: Open (default)/Close - switch product image when
+                        selecting variant</li>
+                </ul>
+
+                <h4>1.8.2 Variant Color Card</h4>
+                <ul>
+                    <li><strong>Display Variant Images on Color Card</strong>: Open (default)/Close</li>
+                    <li><strong>Color Card Width</strong>: 20-60px (default: 32px)</li>
+                    <li><strong>Color Card Height</strong>: 20-60px (default: 32px)</li>
+                    <li><strong>Color Card Border Radius</strong>: 0-50px (default: 8px)</li>
+                </ul>
+
+                <h4>1.8.3 Price Display</h4>
+                <ul>
+                    <li><strong>Display Currency Code on Product Page</strong>: Close (default)/Open</li>
+                    <li><strong>Display Currency Code on Product Card</strong>: Close (default)/Open</li>
+                    <li><strong>Display Currency Code in Shopping Cart</strong>: Open (default)/Close</li>
+                </ul>
+
+                <h3>1.9 Badge Settings</h3>
+                <ul>
+                    <li><strong>Display Badge</strong>: Open (default)/Close - display "Sold Out", "Promotion" etc.
+                        badges</li>
+                    <li><strong>Sold Out Badge Color Scheme</strong>: scheme-1(default)</li>
+                    <li><strong>Promotion Badge Color Scheme</strong>: scheme-1(default)</li>
+                    <li><strong>Badge Border Radius</strong>: 0-50px (default: 12px)</li>
+                </ul>
+
+                <h3>1.10 Search Function</h3>
+                <h4>1.10.1 Basic Settings</h4>
+                <ul>
+                    <li><strong>Enable Search</strong>: Open (default)/Close</li>
+                    <li><strong>Enable Search Modal</strong>: Open (default)/Close - modal search interface</li>
+                    <li><strong>Search Modal Color Scheme</strong>: scheme-1(default)</li>
+                </ul>
+
+                <h4>1.10.2 Layout Settings</h4>
+                <ul>
+                    <li><strong>Desktop Grid Columns</strong>: 1-5 columns (default: 3 columns)</li>
+                    <li><strong>Mobile Grid Columns</strong>: 1-5 columns (default: 2 columns)</li>
+                    <li><strong>Search Results</strong>: 3-12 (default: 6)</li>
+                </ul>
+
+                <h4>1.10.3 Display Options</h4>
+                <ul>
+                    <li><strong>Display Product Supplier</strong>: Close (default)/Open</li>
+                    <li><strong>Desktop Media Width</strong>: 0-500px (default: 200px)</li>
+                    <li><strong>Mobile Media Width</strong>: 0-500px (default: 50px)</li>
+                </ul>
+
+                <h3>1.11 Animation Effect</h3>
+                <ul>
+                    <li><strong>Enable Animation</strong>: Open (default)/Close - global animation switch</li>
+                    <li><strong>Animation Duration</strong>
+                        <ul>
+                            <li>Fast: Fast</li>
+                            <li>Normal: Normal (default)</li>
+                            <li>Slow: Slow</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="section" id="header">
+                <h2>2. Header Section</h2>
+
+                <h3>2.1 Announcement Bar</h3>
+                <p>Optional Configuration: Color Preset, Mobile/Desktop Element Height</p>
+
+                <h4>2.1.1 Block Settings</h4>
+                <p>Optional Marquee Effect and Carousel Effect (Note: You need to delete one block to change)</p>
+
+                <h3>2.2 Header Section</h3>
+                <p>Optional Configuration: Color Preset, Title Font Style Preset, Menu Title Style Preset; menu
+                    selection, sticky navigation related configuration; mobile/desktop element height</p>
+
+                <h4>2.2.1 Block Settings</h4>
+                <p><strong>Mega Menu</strong>: Converts the Menu corresponding to the Link Title into a Mega Menu;
+                    Optional Configuration: 3图文modules</p>
+            </section>
+
+            <section class="section" id="footer">
+                <h2>3. Footer Section</h2>
+                <p>Optional Configuration: Color Preset; menu selection; desktop row/column spacing, mobile row/column
+                    spacing</p>
+
+                <h3>3.1.1 Block Settings</h3>
+
+                <h4>Button</h4>
+                <p>Optional Configuration: button text, redirect link, whether to enter a new page</p>
+
+                <h4>Text</h4>
+                <p>Optional Configuration: text content, using H1 tag (Use with caution! It will convert HTML tags into
+                    H1 tags, and using it carelessly will cause SEO issues).</p>
+                <h4>Menu (Footer menu)</h4>
+                <p>Optional Configuration: Menu links, Menu top title, whether to display mobile fold box icon, whether
+                    to automatically expand on mobile, title and menu link text font preset</p>
+
+                <h4>Social Medias</h4>
+                <p>New Social Media block, can configure link, Icon will automatically display according to the type of
+                    link.</p>
+
+                <h4>Column (can configure containers arranged vertically)</h4>
+                <p>Optional Configuration: arrangement direction, container length/height selection, horizontal/vertical
+                    alignment, desktop/mobile sub-element spacing.</p>
+            </section>
+
+            <section class="section" id="custom-section">
+                <h2>4. Custom Section</h2>
+                <p>Default Configuration: page width, container height, color preset, background image configuration,
+                    desktop/mobile top and bottom spacing.</p>
+
+                <h3>4.1 Block Settings</h3>
+                <p>Can configure all common blocks in the current theme.</p>
+            </section>
+
+            <section class="section" id="marquee">
+                <h2>5. Marquee</h2>
+                <p>Default Configuration: page width, container height, color preset, background image configuration,
+                    desktop/mobile top and bottom spacing.</p>
+
+                <h3>5.1 Block Settings</h3>
+                <p>Can configure all common blocks in the current theme.</p>
+            </section>
+
+            <section class="section" id="media-group">
+                <h2>6. Media Group</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>6.1 Block Settings</h3>
+
+                <h4>Row/Column (Same as before)</h4>
+
+                <h4>Media Group</h4>
+                <p>Optional Configuration: color preset; divide the current container into several columns; space
+                    between mobile/desktop images; whether to use custom configuration for the height of sub-element
+                    images (if yes, the base height of the sub-element container is configurable, if 100px is
+                    configured, then the height of the sub-container is the value of Media Column multiplied by 100px;
+                    if no, then the base height of the sub-container is the value of the width of each column:
+                    approximately 1:1); desktop/mobile top and bottom spacing.</p>
+
+                <p><strong>Sub-Block (Media Group Item)</strong></p>
+                <p>Optional Configuration: mobile/desktop media image and video configuration, and image redirect link;
+                    color preset configuration, border radius; desktop/mobile can configure how many rows and columns
+                    (the number of columns is calculated according to the number of columns into which the Media Group
+                    is divided, and the number of rows is calculated according to the base height multiplied by the
+                    preset value).</p>
+            </section>
+
+            <section class="section" id="shop-the-look">
+                <h2>7. Shop the Look</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>7.1 Block Settings</h3>
+
+                <h4>Shop the Look</h4>
+                <p>Optional Configuration: banner image and product carousel layout ratio; space between desktop and
+                    mobile two containers; product display configuration, product List and collection two can choose one
+                    (list weight is higher than collection; please note: the number of <strong>Shop the Look
+                        Button</strong> needs to be the same as the number of products)</p>
+
+                <h4>Sub-Block (Shop the Look Points)</h4>
+                <p>Optional Configuration: mobile/desktop image configuration, mobile/desktop border radius
+                    configuration, whether to render the height of the image container according to the ratio of the
+                    image (if no, the height of the mobile/desktop image container can be customized); desktop/mobile
+                    top and bottom spacing.</p>
+
+                <h4>Sub-Block (Shop the Look Button)</h4>
+                <p>Optional Configuration: relative distance from the top and left of the desktop/mobile button, size of
+                    the desktop/mobile button, color related to the button.</p>
+
+                <h4>Sub-Block (Product Card)</h4>
+                <p>Optional Configuration: color preset, border radius, whether to render the product image according to
+                    the original ratio (if no, the height of the desktop/mobile container can be customized);
+                    desktop/mobile top and bottom spacing.</p>
+
+                <h4>Sub-Block (Product Title)</h4>
+                <p>Optional Configuration: associated product (default: the product of the current card), other
+                    configuration related to Text.</p>
+
+                <h4>Sub-Block (Product Price)</h4>
+                <p>Optional Configuration: associated product (default: the product of the current card), font style
+                    preset.</p>
+
+                <h4>Sub-Block (Product Form)</h4>
+                <p>Optional Configuration: associated product (default: the product of the current card).</p>
+
+                <h4>Sub-Block (Product Quantity、Product Add to Cart、Product Checkout)</h4>
+
+                <h4>Sub-Block (Product Variant)</h4>
+                <p>Optional Configuration: associated product, whether to display the name of the variant button,
+                    whether to only display the color variant, variant button style.</p>
+            </section>
+
+            <section class="section" id="slideshow">
+                <h2>8. Slideshow</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>8.1 Block Settings</h3>
+
+                <h4>Carousel</h4>
+                <p>Optional Configuration: color preset, switch style (left/right switch, transition gradient), whether
+                    to display paginator/left/right switch arrow, whether to automatically scroll, mobile/desktop
+                    container height setting.</p>
+
+                <h4>Sub-Block (Slide)</h4>
+                <p>Optional Configuration: content alignment, background image/video related.</p>
+            </section>
+
+            <section class="section" id="before-after">
+                <h2>9. Before After</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>9.1 Block Settings</h3>
+
+                <h4>Row/Column</h4>
+                <p>Same as before.</p>
+
+                <h4>Before After Image</h4>
+                <p>Optional Configuration: offset of the draggable middle axis when loading, border radius,
+                    mobile/desktop image container height, desktop/mobile top and bottom spacing.</p>
+
+                <h4>Sub-Block (Before Image、After Image)</h4>
+                <p>Optional Configuration: color preset, desktop/mobile image, image shadow mask.</p>
+            </section>
+
+            <section class="section" id="blog-posts">
+                <h2>10. Blog Posts</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>10.1 Block Settings</h3>
+
+                <h4>Row/Column</h4>
+                <p>Same as before.</p>
+
+                <h4>Blog Post List</h4>
+                <p>Optional Configuration: blog, color preset, layout configuration (flat list, carousel), can configure
+                    the number of columns displayed on desktop and mobile, spacing between each blog.</p>
+
+                <h4>Sub-Block (Article Card)</h4>
+                <p>Optional Configuration: color preset, border radius, mobile/desktop image container height (can
+                    choose to render according to the image ratio).</p>
+
+                <h4>Sub-Block (Article Title,Article Author,Article Date)</h4>
+                <p>All configurations are aligned with Text.</p>
+            </section>
+
+            <section class="section" id="collapsible-list">
+                <h2>11. Collapsible List</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>11.1 Block Settings</h3>
+
+                <h4>Text</h4>
+                <p>Same as before.</p>
+
+                <h4>Collapsible</h4>
+                <p>Optional Configuration: whether to default expand, whether to display border (border can display top
+                    border and bottom border), title and title font style, spacing between desktop and mobile.</p>
+            </section>
+
+            <section class="section" id="collection-products">
+                <h2>12. Collection Products</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>12.1 Block Settings</h3>
+
+                <h4>Product Card List</h4>
+                <p>Optional Configuration: collection and product list (for displaying products), color preset, display
+                    layout (flat list, carousel), number of columns displayed on each row on desktop and mobile, spacing
+                    between each element.</p>
+
+                <h4>Sub-Block (Product Card)</h4>
+                <p>Same as before.</p>
+            </section>
+
+            <section class="section" id="collections-list">
+                <h2>13. Collections List</h2>
+                <p>Default Configuration: collection selection; color preset; collection image container height;
+                    collection arrangement form (flat list, carousel), number of columns displayed on each row on
+                    desktop and mobile; spacing between elements; desktop/mobile top and bottom spacing.</p>
+            </section>
+
+            <section class="section" id="media-width-text">
+                <h2>14. Media Width Text</h2>
+                <p>Default Configuration: color preset, desktop/mobile top and bottom spacing.</p>
+
+                <h3>14.1 Block Settings</h3>
+
+                <h4>Media</h4>
+                <p>Optional Configuration: mobile/desktop video image configuration, border radius configuration,
+                    whether to render according to the original ratio (if no, the height of the media container can be
+                    customized).</p>
+
+                <h4>Column、Row、Text</h4>
+                <p>Same as before.</p>
+            </section>
+
+            <section class="section" id="rich-text">
+                <h2>15. Rich Text</h2>
+                <p>Default Configuration: same as Custom Section.</p>
+            </section>
+
+            <section class="section" id="video">
+                <h2>16. Video</h2>
+                <p>Default Configuration: color preset; page width setting; desktop/mobile top and bottom spacing.</p>
+
+                <h3>16.1 Block Settings</h3>
+
+                <h4>Video</h4>
+                <p>Optional Configuration: video type, and corresponding url; can configure video cover and cover mask;
+                    video control related operations; can configure border radius, and mobile/desktop container height.
+                </p>
+            </section>
+
+            <section class="more-info" id="video">
+                <h2>More Information</h2>
+                <p>More Information</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // 生成导航菜单
+        const content = document.getElementById('content');
+        const nav = document.getElementById('nav');
+        const sections = content.querySelectorAll('h2');
+
+        sections.forEach((section, index) => {
+            const link = document.createElement('a');
+            link.textContent = section.textContent;
+            link.href = '#' + section.parentElement.id;
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // 移除所有active类
+                document.querySelectorAll('.sidebar nav a').forEach(a => {
+                    a.classList.remove('active');
+                });
+
+                // 添加active类到当前链接
+                link.classList.add('active');
+
+                // 滚动到对应部分
+                const target = document.getElementById(section.parentElement.id);
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+
+            nav.appendChild(link);
+        });
+
+        // 监听滚动，高亮当前章节
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    document.querySelectorAll('.sidebar nav a').forEach(a => {
+                        a.classList.remove('active');
+                        if (a.getAttribute('href') === '#' + id) {
+                            a.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有section
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+
+</html>
